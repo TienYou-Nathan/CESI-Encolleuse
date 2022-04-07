@@ -59,10 +59,8 @@ client.on('interactionCreate', async interaction => {
     let filePath = "/tmp/"+currDate+".png"
     await interaction.deferReply();
     await takePicture(filePath)
-    const fileembed = new MessageAttachment(filePath);
-    const embed = new MessageEmbed().setTitle(currDate).setImage('attachment://encolleuse.png');
-    await interaction.editReply({ embeds: [embed], files: [fileembed] })
-    //await interaction.reply({ embeds: [embed], files: [fileembed] });
+    const file = new MessageAttachment(filePath);
+    await interaction.editReply({ files: [file] })
     deleteFile(filePath)
   }
 });
