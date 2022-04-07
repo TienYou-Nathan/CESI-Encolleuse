@@ -1,6 +1,17 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const { exec } = require('child_process');
+const fs = require('fs')
 require('dotenv').config()
+
+function deleteFile(filepath){
+  try {
+    fs.unlinkSync(filepath)
+    //file removed
+  } catch(err) {
+    console.error(err)
+  }
+}
 
 function takePicture(filepath){
   return new Promise((resolve, reject)=>{
@@ -49,6 +60,7 @@ client.on('interactionCreate', async interaction => {
     const fileembed = new MessageAttachment(filePath);
     const embed = new MessageEmbed().setTitle(currDate).setImage('attachment://encolleuse.png');
     await interaction.reply({ embeds: [embed], files: [fileembed] });
+    deleteFile(filePath)
   }
 });
 
