@@ -23,8 +23,8 @@ function takePicture(filepath){
   })
 }
 const commands = [{
-  name: 'ping',
-  description: 'Replies with Pong!'
+  name: 'shoot',
+  description: 'Take a beautiful picture'
 }]; 
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
@@ -54,7 +54,7 @@ client.on('ready', () => {
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return;
 
-  if (interaction.commandName === 'ping') {
+  if (interaction.commandName === 'shoot') {
     let currDate = new Date().toISOString()
     let filePath = "/tmp/"+currDate+".png"
     await interaction.deferReply();
