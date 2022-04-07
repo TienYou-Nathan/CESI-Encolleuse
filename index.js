@@ -1,5 +1,6 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+var {MessageAttachment, MessageEmbed } = require('discord.js')
 const { exec } = require('child_process');
 const fs = require('fs')
 require('dotenv').config()
@@ -56,10 +57,12 @@ client.on('interactionCreate', async interaction => {
   if (interaction.commandName === 'ping') {
     let currDate = new Date().toISOString()
     let filePath = "/tmp/"+currDate+".png"
+    await interaction.deferReply();
     await takePicture(filePath)
     const fileembed = new MessageAttachment(filePath);
     const embed = new MessageEmbed().setTitle(currDate).setImage('attachment://encolleuse.png');
-    await interaction.reply({ embeds: [embed], files: [fileembed] });
+    await interaction.editReply({ embeds: [embed], files: [fileembed] })
+    //await interaction.reply({ embeds: [embed], files: [fileembed] });
     deleteFile(filePath)
   }
 });
